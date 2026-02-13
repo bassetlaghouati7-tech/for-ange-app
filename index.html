@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Angely ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1a001f, #330033, #4d004d);
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    transition: background 1s ease;
+}
+
+.container {
+    max-width: 700px;
+    margin: auto;
+    padding-top: 120px;
+}
+
+h1 {
+    font-size: 2.3em;
+    padding: 0 20px;
+    min-height: 120px;
+}
+
+.buttons {
+    margin-top: 40px;
+}
+
+button {
+    font-size: 1.1em;
+    padding: 12px 28px;
+    margin: 10px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.primary {
+    background-color: #ff0066;
+    color: white;
+}
+
+.secondary {
+    background-color: white;
+    color: #ff0066;
+}
+
+#noBtn {
+    position: absolute;
+}
+
+.fade {
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.heart {
+    position: absolute;
+    color: #ff4d6d;
+    font-size: 22px;
+    animation: floatUp 4s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-800px); opacity: 0; }
+}
+
+.glow {
+    font-size: 2.5em;
+    color: #ff4da6;
+    text-shadow: 0 0 10px #ff1a75, 0 0 20px #ff0066, 0 0 40px #ff3399;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Hidden YouTube Music Player -->
+<iframe id="ytMusic" 
+    width="0" height="0" 
+    src="https://www.youtube.com/embed/5_bDH3xQ0-c?autoplay=0&loop=1&playlist=5_bDH3xQ0-c" 
+    frameborder="0" 
+    allow="autoplay; encrypted-media" 
+    allowfullscreen>
+</iframe>
+
+<div class="container fade" id="app">
+    <h1 id="question"></h1>
+    <div class="buttons" id="buttons"></div>
+</div>
+
+<script>
+const question = document.getElementById("question");
+const buttons = document.getElementById("buttons");
+const app = document.getElementById("app");
+const yt = document.getElementById("ytMusic");
+
+let step = 0;
+let musicStarted = false;
+
+function renderStep() {
+    app.classList.remove("fade");
+    void app.offsetWidth;
+    app.classList.add("fade");
+
+    if (step === 0) {
+        question.innerHTML = "Angely... are you alone right now? 😌";
+        buttons.innerHTML = `
+            <button class="primary" onclick="next()">Yes...</button>
+            <button class="primary" onclick="next()">Maybe 👀</button>
+        `;
+    }
+
+    else if (step === 1) {
+        question.innerHTML = "Good. Because i want you to be. 😏";
+        buttons.innerHTML = `
+            <button class="primary" onclick="next()">I want to be with you.</button>
+            <button class="primary" onclick="next()">I will do that for you.</button>
+        `;
+    }
+
+    else if (step === 2) {
+        question.innerHTML = "If I was there right now... would you behave? 💋";
+        buttons.innerHTML = `
+            <button class="primary" onclick="next()">Of course 😇</button>
+            <button class="primary" onclick="next()">Not a chance 😈</button>
+        `;
+    }
+
+    else if (step === 3) {
+        question.innerHTML = "Be honest... do you miss me... or do you miss my hands on you? 🔥";
+        buttons.innerHTML = `
+            <button class="primary" onclick="next()">Just you ❤️</button>
+            <button class="primary" onclick="next()">Both.</button>
+            <button class="primary" onclick="next()">Your hands.</button>
+        `;
+    }
+
+    else if (step === 4) {
+        question.innerHTML = "Careful Angely... because when I finally see you again, I don't plan on behaving either. 😌🔥";
+        buttons.innerHTML = `
+            <button class="primary" onclick="next()">What are you planning?</button>
+        `;
+    }
+
+    else if (step === 5) {
+        document.body.style.background = "#000000";
+        question.innerHTML = "Before I make any dangerous promises... I need to ask you something important.";
+        buttons.innerHTML = `
+            <button class="primary" onclick="next()">Ask me.</button>
+        `;
+    }
+
+    else if (step === 6) {
+        question.innerHTML = "Angely... will you be my Valentine? ❤️";
+        buttons.innerHTML = `
+            <button class="primary" onclick="yes()">Yes 💖</button>
+            <button class="secondary" id="noBtn">No 😏</button>
+        `;
+
+        const noBtn = document.getElementById("noBtn");
+
+        noBtn.addEventListener("mouseover", () => {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.left = x + "px";
+            noBtn.style.top = y + "px";
+        });
+    }
+}
+
+function next() {
+    if (!musicStarted) {
+        // start YouTube music after first click
+        yt.src = yt.src.replace("autoplay=0", "autoplay=1");
+        musicStarted = true;
+    }
+
+    step++;
+    renderStep();
+}
+
+function yes() {
+    question.innerHTML = "Good choice. Now you're officially mine this Valentine’s Day... and I fully plan on making it unforgettable. ❤️‍🔥<br><br><span class='glow'>I love you, Angely.</span>";
+    buttons.innerHTML = "";
+    createHearts();
+}
+
+function createHearts() {
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.top = window.innerHeight + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 4000);
+    }, 300);
+}
+
+renderStep();
+</script>
+
+</body>
+</html>
